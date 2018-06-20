@@ -8,6 +8,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import model.Municipio;
 import model.MunicipioDAO;
@@ -16,16 +18,22 @@ public class MunicipioController {
     static Executavel executavel;
 
     public static void cadastrarMunicipio(String nome, String codigo, String popUrbana, String popTotal){
-    
-        Municipio m = new Municipio();
-        m.setCodigoMunicipio(codigo);
-        m.setNome(nome);
-        m.setPopUrbana(popUrbana);
-        m.setPopTotal(popTotal);
-        executavel.municipios.add(m);
-        
-        JOptionPane.showMessageDialog(null, "Municipio Cadastrado com sucesso", "Sucesso", 1);
-    
+        try {
+            // colocar essa logica dentro do model
+            Municipio m = new Municipio();
+            m.setCodigoMunicipio(codigo);
+            m.setNome(nome);
+            m.setPopUrbana(popUrbana);
+            m.setPopTotal(popTotal);
+            executavel.municipios.add(m);
+            
+            new MunicipioDAO().salvar(m);
+            
+            JOptionPane.showMessageDialog(null, "Municipio Cadastrado com sucesso", "Sucesso", 1);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "erro", "erro", 1);
+        }
+
     }
     
     public static void editarMunicipio(String nome, String codigo, String popUrbana, String popTotal, int pos){
