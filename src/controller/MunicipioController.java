@@ -31,7 +31,8 @@ public class MunicipioController {
             
             JOptionPane.showMessageDialog(null, "Municipio Cadastrado com sucesso", "Sucesso", 1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "erro", "erro", 1);
+            ex.printStackTrace();
+
         }
 
     }
